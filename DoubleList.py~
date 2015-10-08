@@ -1,19 +1,14 @@
-
-# coding: utf-8
-
-# In[1]:
+#-*-coding:utf-8-*-
+#author = popwin
 
 class List_node():
     """链表的node，封装所需元素data、前驱prev、后继succ
     """
     def __init__(self,val,p=None):
-        self.data=val
-        self.prev=p
-        self.succ=p
+        self.data = val
+        self.prev = p
+        self.succ = p
     
-
-
-# In[18]:
 
 class Dlink():
     def __init__(self):
@@ -31,16 +26,16 @@ class Dlink():
         self.head = List_node(val=None)#设置头节点为哨兵node
         self.tail = List_node(val=None)
         p = self.head#设置当前指针，这里每个指针其实就是实例
-        i=0
+        i = 0
         for item in data:
             node = List_node(item)#同样node为实例，里面包括data、prev、succ
             p.succ = node
             node.prev = p#形成双链
             p = p.succ#更改当前指针,尾部指向Null
-            i+=1
-        p.succ=self.tail#末尾的哨兵节点
-        self.tail.prev=p
-        self.size=i#求链表的size，在以后的动态操作中更新
+            i += 1
+        p.succ = self.tail#末尾的哨兵节点
+        self.tail.prev = p
+        self.size = i#求链表的size，在以后的动态操作中更新
 
 ######访问接口######
     def get(self,index):
@@ -50,23 +45,22 @@ class Dlink():
         p = self.head
         while (p.succ != None) and (i!=index):
             p = p.succ#指针后移
-            i+=1
+            i += 1
         if i == index:
             return p
         else:
             print "exsit None"
 
-######插入接口(按index)#####
+######插入接口#####
     def insert_before(self,p,e):
         """在某node前插入一点
-           可见，链表对于动态操作主要消耗在查找定位上
         """
         new_node = List_node(e)
         new_node.prev = p.prev
         new_node.succ = p
         p.prev.succ = new_node
         p.prev = new_node
-        self.size+=1
+        self.size += 1
         return new_node
     
     def insert(self,p,e):
@@ -82,30 +76,15 @@ class Dlink():
         return new_node
         
 
-####删除接口(按index删除)####
-    def remove_index(self,index):
-        p=self.head
-        i=-1
-        while (p.succ != None) and (i != index):
-            i+=1
-            p=p.succ
-        if i==index:
-            p.prev.succ=p.succ
-            p.succ.prev=p.prev
-            self.size -= 1
-        else:
-            print "exist None"
-        return p.data
-
 ####删除接口（按指针删除）
     def remove(self,p):
         """删除指定节点，并返回所删除的元素
         """
-        e=p.data
-        p.succ.prev=p.prev
-        p.prev.succ=p.succ
+        e = p.data
+        p.succ.prev = p.prev
+        p.prev.succ = p.succ
         del p
-        self.size-=1
+        self.size -= 1
         return e
         
 ####search接口####
@@ -129,64 +108,32 @@ class Dlink():
         """
         for l in range(n):
             self.insert(self.search(p.data,l,p),p.data)
-            p=p.succ
+            p = p.succ
             self.remove(p.prev)  
    
     def SelectSort(self,p,n):
         """对从p开始的n个节点(包括p)进行选择排序
         """
-        head=p.prev
-        tail=p
+        head = p.prev
+        tail = p
         for i in range(n):
-            tail=tail.succ
+            tail = tail.succ
         while(1<n):
             self.insert_before(tail,self.remove(self.SelectMax(head.succ,n)))
-            tail=tail.prev
-            n-=1
+            tail = tail.prev
+            n -= 1
         
-
     def SelectMax(self,p,n):
-        Max=p
+	"""选择从p节点开始的n个节点中最大的，返回最大者的指针
+	"""
+        Max = p 
         while(1<n):
             if p.succ.data>p.data:
-                Max=p.succ
-            p=p.succ
-            n-=1
+                Max = p.succ
+            p = p.succ
+            n -= 1
         return Max
         
-
-
-# In[21]:
-
-x.size
-
-
-# In[28]:
-
-x=Dlink()
-
-
-# In[29]:
-
-x.initlist([1,9,8,7,6,10,4,3,2,1,0])
-
-
-# In[31]:
-
-x.SelectSort(x[0],11)
-
-
-# In[30]:
-
-print x[0].data,x[1].data,x[2].data,x[3].data,x[4].data,x[5].data,x[6].data,x[7].data,x[8].data,x[9].data,x[10].data
-
-
-# In[32]:
-
-print x[0].data,x[1].data,x[2].data,x[3].data,x[4].data,x[5].data,x[6].data,x[7].data,x[8].data,x[9].data,x[10].data
-
-
-# In[ ]:
 
 
 
