@@ -1,0 +1,37 @@
+
+# coding: utf-8
+
+
+import numpy as np
+
+
+
+def ShellSort(x):
+    """
+    """
+    sub = len(x)//2#用2的倍数当做shellsort的步长，子列的大小
+    while sub>0:
+        for lo in range(sub):#从子列的开头扫描
+            GapInsertSort(x,lo,sub)
+        sub = sub//2
+    
+def GapInsertSort(x,lo,gap):
+    """
+    """
+    succ = lo+gap
+    for i in range(succ,len(x),gap):#以sub为步长进行扫描比较
+        c = x[i]
+        p = i
+        while p>=gap and c<x[p-gap]: #将当前值与其前面步长的值比较，小则交换，并且一直比较到最开始的值
+            x[p] = x[p-gap]
+            p = p-gap
+        x[p] = c#将当前值放到合适的位置，其实就是插入排序
+        
+
+
+if __name__ == "main":
+    x=[-19,2,1,0,15,-3,9,8,6,-10]
+    ShellSort(x)
+
+
+
